@@ -1,89 +1,53 @@
-import java.util.Stack;
-
 /**
  * ==============================================================
- * MAIN CLASS – UseCase8PalindromeCheckerApp
+ * MAIN CLASS – UseCase9PalindromeCheckerApp
  * ==============================================================
  *
- * Use Case 8: Linked List Based Palindrome Checker
+ * Use Case 9: Recursive Palindrome Checker
  *
  * Description:
- * This program checks whether a string is a palindrome
- * using a singly linked list.
+ * This class checks whether a string is a palindrome
+ * using recursion.
  *
- * Steps:
- * - Convert string characters into nodes of a linked list
- * - Push characters into a stack
- * - Compare linked list traversal with stack pop values
+ * The recursive method compares characters from both ends
+ * and calls itself with a smaller substring.
  *
  * @author Developer
- * @version 8.0
+ * @version 9.0
  */
 
-public class UseCase8PalindromeCheckerApp {
+public class UseCase9PalindromeCheckerApp {
 
-    // Node class for singly linked list
-    static class Node {
-        char data;
-        Node next;
+    // Recursive method
+    public static boolean isPalindrome(String str, int left, int right) {
 
-        Node(char data) {
-            this.data = data;
-            this.next = null;
+        // Base case
+        if (left >= right) {
+            return true;
         }
+
+        // If characters don't match
+        if (str.charAt(left) != str.charAt(right)) {
+            return false;
+        }
+
+        // Recursive call
+        return isPalindrome(str, left + 1, right - 1);
     }
 
     public static void main(String[] args) {
 
-        String input = "level";
+        String input = "madam";
 
-        Node head = null;
-        Node temp = null;
-
-        // Create Linked List
-        for (char c : input.toCharArray()) {
-
-            Node newNode = new Node(c);
-
-            if (head == null) {
-                head = newNode;
-                temp = head;
-            } else {
-                temp.next = newNode;
-                temp = newNode;
-            }
-        }
-
-        Stack<Character> stack = new Stack<>();
-
-        Node current = head;
-
-        // Push elements into stack
-        while (current != null) {
-            stack.push(current.data);
-            current = current.next;
-        }
-
-        boolean isPalindrome = true;
-        current = head;
-
-        // Compare stack and linked list
-        while (current != null) {
-
-            if (current.data != stack.pop()) {
-                isPalindrome = false;
-                break;
-            }
-
-            current = current.next;
-        }
+        boolean result = isPalindrome(input, 0, input.length() - 1);
 
         System.out.println("Input String: " + input);
 
-        if (isPalindrome) {
+        if (result) {
             System.out.println("Result: It is a Palindrome.");
         } else {
             System.out.println("Result: It is NOT a Palindrome.");
         }
+
     }
 }
