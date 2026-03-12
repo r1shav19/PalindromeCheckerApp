@@ -1,52 +1,81 @@
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * ==============================================================
- * MAIN CLASS – UseCase7PalindromeCheckerApp
+ * MAIN CLASS – UseCase8PalindromeCheckerApp
  * ==============================================================
  *
- * Use Case 7: Deque-Based Optimized Palindrome Checker
+ * Use Case 8: Linked List Based Palindrome Checker
  *
  * Description:
- * This class checks whether a string is a palindrome
- * using a Deque (Double Ended Queue).
+ * This program checks whether a string is a palindrome
+ * using a singly linked list.
  *
- * At this stage, the application:
- * - Stores characters in a Deque
- * - Compares front and rear characters
- * - Removes them if they match
- * - Determines whether the string is a palindrome
+ * Steps:
+ * - Convert string characters into nodes of a linked list
+ * - Push characters into a stack
+ * - Compare linked list traversal with stack pop values
  *
  * @author Developer
- * @version 7.0
+ * @version 8.0
  */
 
-public class UseCase7PalindromeCheckerApp {
+public class UseCase8PalindromeCheckerApp {
+
+    // Node class for singly linked list
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
     public static void main(String[] args) {
 
-        String input = "racecar";
+        String input = "level";
 
-        Deque<Character> deque = new LinkedList<>();
+        Node head = null;
+        Node temp = null;
 
-        // Add characters to deque
+        // Create Linked List
         for (char c : input.toCharArray()) {
-            deque.addLast(c);
+
+            Node newNode = new Node(c);
+
+            if (head == null) {
+                head = newNode;
+                temp = head;
+            } else {
+                temp.next = newNode;
+                temp = newNode;
+            }
+        }
+
+        Stack<Character> stack = new Stack<>();
+
+        Node current = head;
+
+        // Push elements into stack
+        while (current != null) {
+            stack.push(current.data);
+            current = current.next;
         }
 
         boolean isPalindrome = true;
+        current = head;
 
-        while (deque.size() > 1) {
+        // Compare stack and linked list
+        while (current != null) {
 
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
+            if (current.data != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
 
+            current = current.next;
         }
 
         System.out.println("Input String: " + input);
@@ -56,6 +85,5 @@ public class UseCase7PalindromeCheckerApp {
         } else {
             System.out.println("Result: It is NOT a Palindrome.");
         }
-
     }
 }
