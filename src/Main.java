@@ -1,21 +1,26 @@
+import java.util.Stack;
+
 /**
  * ==============================================================
- * MAIN CLASS – UseCase11PalindromeCheckerApp
+ * MAIN CLASS – UseCase12PalindromeCheckerApp
  * ==============================================================
  *
- * Use Case 11: Object-Oriented Palindrome Service
- * Goal: Encapsulate palindrome logic inside a service class.
+ * Use Case 12: Strategy Pattern for Palindrome Algorithms
+ *
+ * Goal:
+ * Dynamically choose different palindrome algorithms.
  */
 
-public class UseCase11PalindromeCheckerApp {
+public class UseCase12PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String input = "Madam";
+        String input = "level";
 
-        PalindromeService service = new PalindromeService();
+        // Choose algorithm dynamically
+        PalindromeStrategy strategy = new ReverseStrategy();
 
-        boolean result = service.isPalindrome(input);
+        boolean result = strategy.isPalindrome(input);
 
         System.out.println("Input String: " + input);
 
@@ -24,27 +29,72 @@ public class UseCase11PalindromeCheckerApp {
         } else {
             System.out.println("Result: It is NOT a Palindrome.");
         }
-
     }
 }
 
 /**
- * Service class containing palindrome logic
+ * Strategy Interface
  */
-class PalindromeService {
+interface PalindromeStrategy {
+
+    boolean isPalindrome(String input);
+
+}
+
+/**
+ * Strategy 1: Reverse String Algorithm
+ */
+class ReverseStrategy implements PalindromeStrategy {
 
     public boolean isPalindrome(String input) {
 
-        String processed = input.replaceAll("\\s+", "").toLowerCase();
+        String reversed = new StringBuilder(input).reverse().toString();
 
-        for (int i = 0; i < processed.length() / 2; i++) {
+        return input.equals(reversed);
+    }
+}
 
-            if (processed.charAt(i) != processed.charAt(processed.length() - 1 - i)) {
-                return false;
-            }
+/**
+ * Strategy 2: Stack Algorithm
+ */
+class StackStrategy implements PalindromeStrategy {
 
+    public boolean isPalindrome(String input) {
+
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : input.toCharArray()) {
+            stack.push(c);
         }
 
-        return true;
+        String reversed = "";
+
+        while (!stack.isEmpty()) {
+            reversed += stack.pop();
+        }
+
+        return input.equals(reversed);
+    }
+}
+
+/**
+ * Strategy 3: Recursive Algorithm
+ */
+class RecursiveStrategy implements PalindromeStrategy {
+
+    public boolean isPalindrome(String input) {
+
+        return check(input, 0, input.length() - 1);
+    }
+
+    private boolean check(String str, int left, int right) {
+
+        if (left >= right)
+            return true;
+
+        if (str.charAt(left) != str.charAt(right))
+            return false;
+
+        return check(str, left + 1, right - 1);
     }
 }
