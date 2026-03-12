@@ -1,51 +1,48 @@
-import java.util.Stack;
-import java.util.Queue;
+import java.util.Deque;
 import java.util.LinkedList;
 
 /**
  * ==============================================================
- * MAIN CLASS – UseCase6PalindromeCheckerApp
+ * MAIN CLASS – UseCase7PalindromeCheckerApp
  * ==============================================================
  *
- * Use Case 6: Queue + Stack Based Palindrome Check
+ * Use Case 7: Deque-Based Optimized Palindrome Checker
  *
  * Description:
- * This class demonstrates palindrome checking using
- * both Stack (LIFO) and Queue (FIFO).
+ * This class checks whether a string is a palindrome
+ * using a Deque (Double Ended Queue).
  *
  * At this stage, the application:
- * - Stores characters in a Stack and Queue
- * - Compares Stack pop vs Queue poll
+ * - Stores characters in a Deque
+ * - Compares front and rear characters
+ * - Removes them if they match
  * - Determines whether the string is a palindrome
- * - Displays the result
  *
  * @author Developer
- * @version 6.0
+ * @version 7.0
  */
 
-public class UseCase6PalindromeCheckerApp {
+public class UseCase7PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String input = "madam";
+        String input = "racecar";
 
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
+        Deque<Character> deque = new LinkedList<>();
 
-        // Insert characters into both Stack and Queue
+        // Add characters to deque
         for (char c : input.toCharArray()) {
-            stack.push(c);
-            queue.add(c);
+            deque.addLast(c);
         }
 
         boolean isPalindrome = true;
 
-        while (!stack.isEmpty()) {
+        while (deque.size() > 1) {
 
-            char stackChar = stack.pop();   // LIFO
-            char queueChar = queue.poll();  // FIFO
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
 
-            if (stackChar != queueChar) {
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
