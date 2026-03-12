@@ -1,37 +1,49 @@
 /**
  * ==============================================================
- * MAIN CLASS – UseCase3PalindromeCheckerApp
+ * MAIN CLASS – UseCase4PalindromeCheckerApp
  * ==============================================================
  *
- * Use Case 3: Palindrome Check Using String Reverse
+ * Use Case 4: Character Array Based Palindrome Check
  *
  * Description:
  * This class checks whether a string is a palindrome
- * by reversing the string and comparing it with the original.
+ * by converting the string into a character array and
+ * comparing characters from both ends.
  *
  * At this stage, the application:
- * - Stores a string
- * - Reverses the string
- * - Compares original and reversed values
+ * - Converts a string to a character array
+ * - Compares characters from start and end
+ * - Determines whether the string is a palindrome
  * - Displays the result
  *
  * @author Developer
- * @version 3.0
+ * @version 4.0
  */
 
-public class UseCase3PalindromeCheckerApp {
+public class UseCase4PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String input = "level";   // Example string
+        String input = "racecar";
 
-        // Reverse the string
-        String reversed = new StringBuilder(input).reverse().toString();
+        // Convert string to character array
+        char[] chars = input.toCharArray();
 
-        System.out.println("Original String: " + input);
-        System.out.println("Reversed String: " + reversed);
+        boolean isPalindrome = true;
 
-        if (input.equals(reversed)) {
+        // Compare characters from both ends
+        for (int i = 0; i < chars.length / 2; i++) {
+
+            if (chars[i] != chars[chars.length - 1 - i]) {
+                isPalindrome = false;
+                break;
+            }
+
+        }
+
+        System.out.println("Input String: " + input);
+
+        if (isPalindrome) {
             System.out.println("Result: It is a Palindrome.");
         } else {
             System.out.println("Result: It is NOT a Palindrome.");
