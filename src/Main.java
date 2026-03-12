@@ -2,33 +2,65 @@ import java.util.Stack;
 
 /**
  * ==============================================================
- * MAIN CLASS – UseCase12PalindromeCheckerApp
+ * MAIN CLASS – UseCase13PalindromeCheckerApp
  * ==============================================================
  *
- * Use Case 12: Strategy Pattern for Palindrome Algorithms
+ * Use Case 13: Performance Comparison
  *
- * Goal:
- * Dynamically choose different palindrome algorithms.
+ * Description:
+ * This class measures and compares the execution
+ * performance of palindrome validation algorithms.
+ *
+ * At this stage, the application:
+ * - Uses palindrome strategy implementations
+ * - Captures execution start and end time
+ * - Calculates total execution duration
+ * - Displays benchmarking results
+ *
+ * This use case focuses purely on performance
+ * measurement and algorithm comparison.
+ *
+ * The goal is to introduce benchmarking concepts.
+ *
+ * @author Developer
+ * @version 13.0
  */
 
-public class UseCase12PalindromeCheckerApp {
+public class UseCase13PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String input = "level";
+        String input = "racecar";
 
-        // Choose algorithm dynamically
-        PalindromeStrategy strategy = new ReverseStrategy();
+        // Strategies to test
+        PalindromeStrategy reverseStrategy = new ReverseStrategy();
+        PalindromeStrategy stackStrategy = new StackStrategy();
+        PalindromeStrategy recursiveStrategy = new RecursiveStrategy();
 
-        boolean result = strategy.isPalindrome(input);
+        // Reverse Strategy Benchmark
+        long startTime = System.nanoTime();
+        boolean result1 = reverseStrategy.isPalindrome(input);
+        long endTime = System.nanoTime();
+        long duration1 = endTime - startTime;
+
+        // Stack Strategy Benchmark
+        startTime = System.nanoTime();
+        boolean result2 = stackStrategy.isPalindrome(input);
+        endTime = System.nanoTime();
+        long duration2 = endTime - startTime;
+
+        // Recursive Strategy Benchmark
+        startTime = System.nanoTime();
+        boolean result3 = recursiveStrategy.isPalindrome(input);
+        endTime = System.nanoTime();
+        long duration3 = endTime - startTime;
 
         System.out.println("Input String: " + input);
+        System.out.println();
 
-        if (result) {
-            System.out.println("Result: It is a Palindrome.");
-        } else {
-            System.out.println("Result: It is NOT a Palindrome.");
-        }
+        System.out.println("Reverse Strategy Result: " + result1 + " | Time: " + duration1 + " ns");
+        System.out.println("Stack Strategy Result: " + result2 + " | Time: " + duration2 + " ns");
+        System.out.println("Recursive Strategy Result: " + result3 + " | Time: " + duration3 + " ns");
     }
 }
 
@@ -36,26 +68,23 @@ public class UseCase12PalindromeCheckerApp {
  * Strategy Interface
  */
 interface PalindromeStrategy {
-
     boolean isPalindrome(String input);
-
 }
 
 /**
- * Strategy 1: Reverse String Algorithm
+ * Reverse String Strategy
  */
 class ReverseStrategy implements PalindromeStrategy {
 
     public boolean isPalindrome(String input) {
 
         String reversed = new StringBuilder(input).reverse().toString();
-
         return input.equals(reversed);
     }
 }
 
 /**
- * Strategy 2: Stack Algorithm
+ * Stack Strategy
  */
 class StackStrategy implements PalindromeStrategy {
 
@@ -78,12 +107,11 @@ class StackStrategy implements PalindromeStrategy {
 }
 
 /**
- * Strategy 3: Recursive Algorithm
+ * Recursive Strategy
  */
 class RecursiveStrategy implements PalindromeStrategy {
 
     public boolean isPalindrome(String input) {
-
         return check(input, 0, input.length() - 1);
     }
 
